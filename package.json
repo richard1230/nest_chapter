@@ -24,20 +24,28 @@
     "@nestjs/common": "^9.2.1",
     "@nestjs/core": "^9.2.1",
     "@nestjs/platform-express": "^9.2.1",
+    "@nestjs/typeorm": "^9.0.1",
+    "@types/lodash": "^4.14.191",
+    "@types/sanitize-html": "^2.8.0",
+    "deepmerge": "^4.2.2",
+    "lodash": "^4.17.21",
+    "mysql2": "^3.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^4.1.1",
-    "rxjs": "^7.8.0"
+    "rxjs": "^7.8.0",
+    "sanitize-html": "^2.8.1",
+    "typeorm": "^0.3.11"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.1.8",
     "@nestjs/schematics": "^9.0.4",
     "@nestjs/testing": "^9.2.1",
-    "@types/express": "^4.17.15",
+    "@types/express": "^4.17.16",
     "@types/jest": "29.2.6",
     "@types/node": "^18.11.18",
     "@types/supertest": "^2.0.12",
-    "@typescript-eslint/eslint-plugin": "^5.48.2",
-    "@typescript-eslint/parser": "^5.48.2",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
     "eslint": "^8.32.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -77,6 +85,9 @@
     "peerDependencyRules": {
       "ignoreMissing": [
         "webpack"
+      ],
+      "allowAny": [
+        "mysql2"
       ]
     }
   }

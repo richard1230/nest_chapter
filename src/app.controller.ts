@@ -10,7 +10,7 @@ export class AppController {
     getHello(): string {
         console.log('hello word,this is nestjs');
         console.log();
-        console.log("world");
+        console.log('world');
         return this.appService.getHello();
     }
 }
