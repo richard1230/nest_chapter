@@ -1,13 +1,21 @@
+import { Injectable } from '@nestjs/common';
+
 import { isFunction, isNil, omit } from 'lodash';
+
 import { EntityNotFoundError, IsNull, Not, SelectQueryBuilder } from 'typeorm';
 
 import { paginate } from '@/modules/database/helpers';
-import { PaginateOptions, QueryHook } from '@/modules/database/types';
 
+import { PaginateOptions, QueryHook } from '../../database/types';
 import { PostOrderType } from '../constants';
-import { PostEntity } from '../entities';
+
+import { PostEntity } from '../entities/post.entity';
 import { PostRepository } from '../repositories/post.repository';
 
+/**
+ * 文章数据操作
+ */
+@Injectable()
 export class PostService {
     constructor(protected repository: PostRepository) {}
 
@@ -41,6 +49,7 @@ export class PostService {
      */
     async create(data: Record<string, any>) {
         const item = await this.repository.save(data);
+
         return this.detail(item.id);
     }
 
