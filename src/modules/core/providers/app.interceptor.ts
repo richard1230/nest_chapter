@@ -22,7 +22,10 @@ export class AppIntercepter extends ClassSerializerInterceptor {
         }
         // 如果是分页数据,则对items中的每一项进行序列化
         if ('meta' in response && 'items' in response) {
-            const items = !isNil(response.items) && isArray(response.items) ? response.items : [];
+            const items =
+                !isNil((response as any).items) && isArray((response as any).items)
+                    ? (response as any).items
+                    : [];
             return {
                 ...response,
                 items: (items as PlainLiteralObject[]).map((item) => {
