@@ -48,6 +48,10 @@ export class QueryPostDto implements PaginateOptions {
     @IsNumber()
     @IsOptional()
     limit = 10;
+
+    @IsUUID(undefined, { message: '分类ID格式错误' })
+    @IsOptional()
+    category?: string;
 }
 
 /**

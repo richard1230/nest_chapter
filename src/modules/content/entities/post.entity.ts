@@ -4,11 +4,17 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinTable,
+    ManyToMany,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
 
 import { PostBodyType } from '../constants';
+
+import { CategoryEntity } from './category.entity';
+import { CommentEntity } from './comment.entity';
 
 @Exclude()
 @Entity('content_posts')
@@ -70,4 +76,18 @@ export class PostEntity extends BaseEntity {
         comment: '更新时间',
     })
     updatedAt!: Date;
+
+    @ManyToMany(() => CategoryEntity, (category) => category.posts, {
+        cascade: true,
+    })
+    @JoinTable()
+    categories!: CategoryEntity[];
+
+    @OneToMany((type) => CommentEntity, (comment) => comment.post, {
+        cascade: true,
+    })
+    comments!: CommentEntity[];
+
+    @Expose()
+    commentCount!: number;
 }
