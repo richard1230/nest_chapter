@@ -16,23 +16,26 @@ import { PostBodyType } from '../constants';
 import { CategoryEntity } from './category.entity';
 import { CommentEntity } from './comment.entity';
 
+/**
+ * 文章模型
+ */
 @Exclude()
 @Entity('content_posts')
 export class PostEntity extends BaseEntity {
     @Expose()
     @PrimaryGeneratedColumn('uuid')
-    id!: string;
+    id: string;
 
     @Expose()
     @Column({ comment: '文章标题' })
-    title!: string;
+    title: string;
 
     @Expose({ groups: ['post-detail'] })
     @Column({ comment: '文章内容', type: 'longtext' })
-    body!: string;
+    body: string;
 
     @Expose()
-    @Column({ comment: '文章摘要', nullable: true })
+    @Column({ comment: '文章描述', nullable: true })
     summary?: string;
 
     @Expose()
@@ -46,14 +49,7 @@ export class PostEntity extends BaseEntity {
         enum: PostBodyType,
         default: PostBodyType.MD,
     })
-    type!: PostBodyType;
-
-    @Expose()
-    @Column({
-        comment: '文章排序',
-        default: 0,
-    })
-    customOrder: number;
+    type: PostBodyType;
 
     @Expose()
     @Column({
@@ -61,33 +57,40 @@ export class PostEntity extends BaseEntity {
         type: 'varchar',
         nullable: true,
     })
-    publishedAt: Date;
+    publishedAt?: Date | null;
+
+    @Expose()
+    @Column({ comment: '自定义文章排序', default: 0 })
+    customOrder: number;
 
     @Expose()
     @Type(() => Date)
     @CreateDateColumn({
         comment: '创建时间',
     })
-    createdAt!: Date;
+    createdAt: Date;
 
     @Expose()
     @Type(() => Date)
     @UpdateDateColumn({
         comment: '更新时间',
     })
-    updatedAt!: Date;
+    updatedAt: Date;
 
+    @Expose()
+    commentCount: number;
+
+    @Expose()
+    @Type(() => CategoryEntity)
     @ManyToMany(() => CategoryEntity, (category) => category.posts, {
+        // 在新增文章时,如果所属分类不存在则直接创建
         cascade: true,
     })
     @JoinTable()
-    categories!: CategoryEntity[];
+    categories: CategoryEntity[];
 
     @OneToMany((type) => CommentEntity, (comment) => comment.post, {
         cascade: true,
     })
-    comments!: CommentEntity[];
-
-    @Expose()
-    commentCount!: number;
+    comments: CommentEntity[];
 }
