@@ -1,8 +1,9 @@
-import { Expose, Type } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 import {
     BaseEntity,
     Column,
     CreateDateColumn,
+    Entity,
     ManyToOne,
     PrimaryGeneratedColumn,
     TreeChildren,
@@ -11,6 +12,8 @@ import {
 
 import { PostEntity } from './post.entity';
 
+@Exclude()
+@Entity('content_comments')
 export class CommentEntity extends BaseEntity {
     @Expose()
     @PrimaryGeneratedColumn('uuid')

@@ -19,7 +19,7 @@ import { CommentService } from '../services/comment.service';
 export class CommentController {
     constructor(protected service: CommentService) {}
 
-    @Get()
+    @Get('tree')
     @SerializeOptions({ groups: ['comment-tree'] })
     async tree(
         @Query(
