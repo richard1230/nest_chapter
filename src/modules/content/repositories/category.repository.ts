@@ -26,10 +26,32 @@ export class CategoryRepository extends TreeRepository<CategoryEntity> {
         const parentPropertyName = joinColumn.givenDatabaseName || joinColumn.databaseName;
 
         const qb = this.buildBaseQB().orderBy('category.customOrder', 'ASC');
-
         qb.where(`${escapeAlias('category')}.${escapeColumn(parentPropertyName)} IS NULL`);
-
         FindOptionsUtils.applyOptionsToTreeQueryBuilder(qb, pick(options, ['relations', 'depth']));
+        return qb.getMany();
+    }
+
+    /**
+     * 查询后代元素
+     * @param entity
+     * @param options
+     */
+    findDescendants(entity: CategoryEntity, options?: FindTreeOptions) {
+        const qb = this.createDescendantsQueryBuilder('category', 'treeClosure', entity);
+        FindOptionsUtils.applyOptionsToTreeQueryBuilder(qb, options);
+        qb.orderBy(`category.customOrder`, 'ASC');
+        return qb.getMany();
+    }
+
+    /**
+     * 查询祖先元素
+     * @param entity
+     * @param options
+     */
+    findAncestors(entity: CategoryEntity, options?: FindTreeOptions) {
+        const qb = this.createAncestorsQueryBuilder('category', 'treeClosure', entity);
+        FindOptionsUtils.applyOptionsToTreeQueryBuilder(qb, options);
+        qb.orderBy(`category.customOrder`, 'ASC');
         return qb.getMany();
     }
 

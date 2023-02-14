@@ -15,7 +15,7 @@ export class PostRepository extends Repository<PostEntity> {
                     .select('COUNT(c.id)', 'count')
                     .from(CommentEntity, 'c')
                     .where('c.post.id = post.id');
-            }, 'commentCOunt')
+            }, 'commentCount')
             .loadRelationCountAndMap('post.commentCount', 'post.comments');
     }
 }
