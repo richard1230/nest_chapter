@@ -6,7 +6,7 @@ import { EntityNotFoundError, In, IsNull, Not, SelectQueryBuilder } from 'typeor
 
 import { paginate } from '@/modules/database/helpers';
 
-import { PaginateOptions, QueryHook } from '../../database/types';
+import { QueryHook } from '../../database/types';
 import { PostOrderType } from '../constants';
 
 import { CreatePostDto, QueryPostDto, UpdatePostDto } from '../dtos';
@@ -37,7 +37,7 @@ export class PostService {
      * @param options 分页选项
      * @param callback 添加额外的查询
      */
-    async paginate(options: PaginateOptions, callback?: QueryHook<PostEntity>) {
+    async paginate(options: QueryPostDto, callback?: QueryHook<PostEntity>) {
         const qb = await this.buildListQuery(this.repository.buildBaseQB(), options, callback);
         return paginate(qb, options);
     }

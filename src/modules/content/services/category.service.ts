@@ -8,7 +8,6 @@ import { treePaginate } from '@/modules/database/helpers';
 import { CreateCategoryDto, QueryCategoryDto, UpdateCategoryDto } from '../dtos/category.dto';
 import { CategoryEntity } from '../entities/category.entity';
 import { CategoryRepository } from '../repositories/category.repository';
-import { CommentEntity } from '../entities/comment.entity';
 
 @Injectable()
 export class CategoryService {

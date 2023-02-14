@@ -1,3 +1,4 @@
+import { PartialType } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
     IsDefined,
@@ -11,9 +12,10 @@ import {
 } from 'class-validator';
 import { toNumber } from 'lodash';
 
+import { DtoValidation } from '@/modules/core/decorators/dto-validation.decorator';
 import { PaginateOptions } from '@/modules/database/types';
-import { PartialType } from '@nestjs/swagger';
 
+@DtoValidation({ type: 'query' })
 export class QueryCategoryDto implements PaginateOptions {
     @Transform(({ value }) => toNumber(value))
     @Min(1, { message: '当前页必须大于1' })
@@ -31,6 +33,7 @@ export class QueryCategoryDto implements PaginateOptions {
 /**
  * 分类新增验证
  */
+@DtoValidation({ groups: ['create'] })
 export class CreateCategoryDto {
     @MaxLength(25, {
         always: true,
@@ -56,6 +59,7 @@ export class CreateCategoryDto {
 /**
  * 分类更新验证
  */
+@DtoValidation({ groups: ['update'] })
 export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {
     @IsUUID(undefined, { groups: ['update'], message: '分类ID格式错误' })
     @IsDefined({ groups: ['update'], message: '分类ID必须指定' })
